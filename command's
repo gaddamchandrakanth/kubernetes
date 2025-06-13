@@ -1,0 +1,3 @@
+UPDATE the port into GCP - { gcloud firewall-rules create rule100 --allow tcp:9090 }
+ROLLING update the application in DEPLOYMENT  - { kubectl set image deployment/[metadata: name: give this }  mytomcat=tomcat:11.0 }
+check AFTER above done process -  { kubectl describe deployment metadata name: [give this]
