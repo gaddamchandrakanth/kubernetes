@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: database
+  namespace: namespace1
+  labels:
+    type: proxy
+    name: chandu
+spec:
+  selector:
+    matchLabels:
+      type: proxy
+      name: chandu
+  template:
+    metadata:
+      name: postgres-pod
+      labels:
+        type: proxy
+        name: chandu
+    spec:
+      containers:
+        - name: database-postgres
+          image: postgres
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-postgres
+                  key: a
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-postgres
+                  key: b
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: database-postgres
+                  key: c
