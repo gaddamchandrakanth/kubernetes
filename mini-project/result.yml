@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result
+  labels:
+    name: chandu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: chandu
+  template:
+    metadata:
+      name: voting-pod
+      labels:
+        name: chandu
+    spec:
+      containers:
+        - name: result
+          image: dockersamples/examplevotingapp_result
+
+...

@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  labels:
+    name: chandu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: chandu
+  template:
+    metadata:
+      name: datastore-pod
+      labels:
+        name: chandu
+    spec:
+      containers:
+        - name: datastored
+          image: dockersamples/examplevotingapp_worker
+...
