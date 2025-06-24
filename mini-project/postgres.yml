@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database2
+  labels:
+    name: chandu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: chandu
+  template:
+    metadata:
+      name: permanent-data-store
+      labels:
+        name: chandu
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: chandu
+            - name: POSTGRES_USER
+              value: chandu
+            - name: POSTGRES_DB
+              value: chandu
+...

@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database1
+  labels:
+    name: chandu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: chandu
+  template:
+    metadata:
+      name: temporary-stored
+      labels:
+        name: chandu
+    spec:
+      containers:
+        - name: data-stored
+          image: redis 
+...

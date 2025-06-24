@@ -1,0 +1,74 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-volume
+  labels:
+    type: testing
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 30Gi
+  hostPath:
+    path: /usr/share/nginx/html
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-volume
+  labels:
+    type: testing
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-volume-pod
+  labels:
+    name: chandu
+spec:
+  containers:
+    - name: mynginx
+      image: nginx
+      volumeMounts:
+        - name: my-volume
+          mountPath: /usr/share/nginx/html
+  volumes:
+    - name: my-volume
+      persistentVolumeClaim:
+        claimName: pvc-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    name: chandu
+spec:
+  selector:
+    name: chandu
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 9090
+      nodePort: 30025
+...
+
+
+
+
+
+
+
+
+
+

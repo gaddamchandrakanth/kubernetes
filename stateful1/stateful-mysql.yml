@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv
+  labels:
+    name: chandu
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  hostPath:
+    path: /var/lib
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc
+  labels:
+    name: chandu
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-stateful
+  labels:
+    name: chandu
+spec:
+  replicas: 2
+  serviceName: mysql-service
+  selector:
+    matchLabels:
+      name: chandu
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        name: chandu
+    spec:
+      containers:
+        - name: database
+          image: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: chandu
+          volumeMounts:
+            - name: myvolume
+              mountPath: /var/lib/mysql
+                
+      volumes:
+        - name: myvolmue
+          persistentVolumeClaim:
+            claimName: pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    name: chandu
+spec:
+  type: LoadBalancer
+  selector:
+    name: chandu
+  ports:
+    - targetPort: 3306
+      port: 9090
+

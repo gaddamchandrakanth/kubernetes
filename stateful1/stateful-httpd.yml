@@ -1,0 +1,74 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-service
+  labels:
+    type: proxy
+spec:
+  clusterIP: None
+  selector:
+    type: proxy
+  ports:
+    - targetPort: 80
+      port: 8080
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv1
+  labels:
+    type: proxy
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  hostPath:
+    path: /var/lib/httpd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc2
+  labels:
+    type: proxy
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: httpd-statefulset
+  labels:
+    type: proxy
+spec:
+  replicas: 2
+  serviceName: httpd-service
+  selector:
+    matchLabels:
+      type: proxy
+  template:
+    metadata:
+      name: httpd-pod
+      labels:
+        type: proxy
+    spec:
+      containers:
+        - name: apache2
+          image: httpd
+          volumeMounts:
+            - name: my-volume1
+              mountPath: /var/lib/httpd
+      volumes:
+        - name: my-volume1
+          persistentVolumeClaim:
+            claimName: pvc2
+
+

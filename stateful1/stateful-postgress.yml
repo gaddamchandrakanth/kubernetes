@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  labels:
+    name: chandu
+spec:
+  clusterIP:  None
+  selector:
+    name: chandu
+  ports:
+    - targetPort: 5432
+      port: 90
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-stateful
+  labels:
+    name: chandu
+spec:
+  replicas: 2
+  serviceName: postgres-service
+  selector:
+    matchLabels:
+      name: chandu
+  template:
+    metadata:
+      name: postgres-pod
+      labels:
+        name: chandu
+    spec:
+      containers:
+        - name: mypostgres
+          image: postgres
+          env:
+            - name: POSTGRES_USER
+              value: chandu
+            - name: POSTGRES_PASSWORD
+              value: chandu

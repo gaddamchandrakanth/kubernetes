@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    name: chandu
+    type: proxy
+spec:
+  containers:
+    - name: mynginx
+      image: nginx
+  tolerations:
+    - key: slave
+      value: chandu
+      operator: Equal
+      effect: NoSchedule

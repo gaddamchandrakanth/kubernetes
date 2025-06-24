@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-service
+  labels:
+    type: webserver
+spec:
+  clusterIP: None
+  selector:
+    type: webserver
+  ports:
+    - targetPort: 8080
+      port: 9090
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tomcat-stateful
+  labels:
+    type: webserver
+spec:
+  replicas: 2
+  serviceName: tomcat-service
+  selector:
+    matchLabels:
+      type: webserver
+  template:
+    metadata:
+      name: tomcat-pod
+      labels:
+        type: webserver
+    spec:
+      containers:
+        - name: my-tomcat
+          image: tomcat
+          volumeMounts:
+            - name: not
+              mountPath: /var/lib/tomcat10
+  volumeClaimTemplates:
+    - metadata:
+        name: not
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 20Gi
