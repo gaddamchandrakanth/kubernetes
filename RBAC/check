@@ -1,0 +1,7 @@
+check:
+
+rolebinding:
+kubectl auth can-i get pods --namespace=namespace1 --as=chandu
+
+clusterRoleBinding:
+kubectl auth can-i get pods --as=chandu
