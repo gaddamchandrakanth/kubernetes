@@ -1,1 +1,7 @@
+gcloud config list - check no of project
+
 gcloud compute firewall-rules create rule114 --allow tcp:9090 
+
+👉 SERVICE object work on pod :
+                      But the Selector Section will be used only in Service object
+                                        & In pod file label should be match
