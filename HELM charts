@@ -1,3 +1,7 @@
+---------------------------------------------------------------------------------------------------------
+  interview: insated of creating mutiple yml file i can use the helm chart to mange them using template.
+------------------------------------------------------------------------------------------------------------
+
 is an package maneger for ks8.
             which allows to install ks8 controller and 3rd party application.
                                             |
@@ -5,7 +9,215 @@ is an package maneger for ks8.
                                        [ prometheus , grafana , argo CD ]
         & also thrid party app like 
                                     'Nginx'
+-------------------------------------------------------------------------------------------------------------------------------
 
------------------------------------------------------------------------------------------------------------
-  interview: insated of creating mutiple yml file i can use the helm chart to mange them using template.
-------------------------------------------------------------------------------------------------------------
+Sequence:
+
+1. helm create chartname
+        └── Chart.yaml   [ pre-defined metadata already there, can change if needed ]
+            templates/   [ deployment, service, config YML files  with variables ]
+            values.yaml  [ here we define variables with values ]
+
+2. helm package chartname
+              → zip (.tgz) file will be created
+
+3. helm repo index .
+             → creates index.yml listing Helm charts (used when creating own Helm repo)
+
+
+--
+
+to install nginx, we need to add Repo
+
+1. add repo : helm repo add bitnami https://charts.bitnami.com/bitnami
+2.   update : helm repo update
+3.   search : helm search repo nginx
+4.  install : helm install my-nginx bitnami/nginx
+
+
+------------------------------------------------------------------------------------
+
+mychart/
+ ├── Chart.yaml  [ meta data ]                                              ----------[ already there will be meta data when we installwd it can use that also ]
+ ├── template    [ deployement / service / config file's with variable  ]
+ └── values.yaml [ can customize thefiles file's with variable  like replicas ]
+        |
+    
+variable's given 
+---------------------------
+image:
+  repository: busybox         [ imag name ]
+  tag: latest                 [  latest version ]
+  pullPolicy: IfNotPresent    [ if not present in node then pull from hub ]
+
+appMessage: "payment service"  [ own anything can write "its is a log message"] 
+
+-----------------------------
+in real-time world we do 
+
+
+
+create helm chart,
+  we get charts.yml    / pre-meta data will be ,if nedded we can use that /
+           template    / inside we create the deployemnt,service,config files with variable's/
+         values.yml    / here we will be defining the variables /
+--------------------------------------------------------------------------------------------
+"helm package ___" : this will do package all charts.yml template valkues into zip file"  
+---------------------------------------------------------------------------------------------
+ "helm repo index . : if we create our own helm chart shud give to list charts in helm"
+----------------------------------------------------------------------------------------
+
+commands:
+          helm install 
+            "  upgrade 
+            "  rollback 
+            "  list
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
