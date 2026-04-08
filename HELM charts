@@ -22,8 +22,7 @@ Sequence:
               → zip (.tgz) file will be created
 
 3. helm repo index .
-             → creates index.yml listing Helm charts (used when creating own Helm repo)
-
+             → creates index.yml [ in this we will e having detials of applcation version] 
 
 --
 
