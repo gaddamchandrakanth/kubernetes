@@ -1,1 +1,11 @@
 is an package maneger for ks8.
+            which allows to install ks8 controller and 3rd party application.
+                                            |
+  using helm install/upgrade/remove :       |
+                                       [ prometheus , grafana , argo CD ]
+        & also thrid party app like 
+                                    'Nginx'
+
+-----------------------------------------------------------------------------------------------------------
+  interview: insated of creating mutiple yml file i can use the helm chart to mange them using template.
+------------------------------------------------------------------------------------------------------------
